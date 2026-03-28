@@ -1,0 +1,14 @@
+wsn-fault-detection-data-engineering/
+│
+├── data/
+│   └── dataset.csv  ← (taruh dataset kamu di sini)
+│
+├── src/
+│   ├── preprocessing.py
+│   ├── sampling.py
+│   ├── train_pipeline.py
+│   └── evaluation.py
+│
+├── main.py
+├── requirements.txt
+└── README.md
