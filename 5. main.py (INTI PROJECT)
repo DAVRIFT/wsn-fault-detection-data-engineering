@@ -1,0 +1,33 @@
+import pandas as pd
+from src.preprocessing import clean_data, normalize_data, encode_labels
+from src.sampling import apply_rus
+from src.train_pipeline import split_data, train_model
+from src.evaluation import evaluate
+
+# Load data
+df = pd.read_csv('data/dataset.csv')
+
+# Preprocessing
+df = clean_data(df)
+df, scaler = normalize_data(df)
+
+X = df[['Humidity', 'Temperature']]
+y = df['Label']
+
+# Encode label
+y_encoded, label_encoder = encode_labels(y)
+
+# Handle imbalance
+X_resampled, y_resampled = apply_rus(X, y_encoded)
+
+# Split
+X_train, X_test, y_train, y_test = split_data(X_resampled, y_resampled)
+
+# Train
+model = train_model(X_train, y_train)
+
+# Predict
+y_pred = model.predict(X_test)
+
+# Evaluate
+evaluate(y_test, y_pred, label_encoder.classes_)
